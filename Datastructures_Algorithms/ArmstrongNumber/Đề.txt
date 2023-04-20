@@ -1,0 +1,22 @@
+------------Làm Bài--------------
+
++ Code trong file main.cpp
++ Nội dung:
+    * Số Armstrong là số nguyên không âm thỏa điều kiện tổng từng chữ số trong số đó lũy thừa với số chữ số của nó bằng chính nó. 
+    Ví dụ:
+137 có 3 chữ số và 1^3 + 3^3 + 7^3 = 371, khác 137. Vậy 137 không phải là số armstrong.
+153 có 3 chữ số và 1^3 + 5^3 + 3^3 = 153. Vậy 153 là số armstrong
+	* Hoàn thành hàm kiểm tra số Armstrong:
+        Tên hàm: ArmstrongNum.
+        Prototype: bool.
+        Tham số truyền vào: số nguyên n.
+        Giá trị trả về: true nếu n là số Armstrong, ngược lại trả về false.
+        Thân hàm: Kiểm tra số được truyền vào có phải là số armstrong hay không và trả về kết quả tương ứng.
+    * Tham khảo hàm pow trong thư viện math.h hoặc cmath để thực hiện việc lũy thừa 1 số.
+	* File Solution.cpp là bài giải mẫu.
+
+------------Chấm Điểm-------------
+- Cài biến môi trường: https://codecute.com/c/huong-dan-cai-dat-trinh-bien-dich-c-c-mingw-gcc.html
+Lưu ý: Kiểm tra xem máy đã được cài biến môi trường chưa theo hướng dẫn ở cuối trang, nếu chưa thì mới tiến hành cài.
+
+- Chạy file test.cpp để xem kết quả.

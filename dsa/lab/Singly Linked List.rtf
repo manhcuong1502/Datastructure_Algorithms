@@ -1,0 +1,609 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset163 Calibri;}{\f1\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.22000}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang1066 sll\par
+\par
+1.\par
+template <class T>\par
+class SLinkedList \{\par
+public:\par
+    class Node; // Forward declaration\par
+protected:\par
+    Node* head;\par
+    Node* tail;\par
+    int count;\par
+public:\par
+    SLinkedList();\par
+    ~SLinkedList();\par
+    void    add(T e);\par
+    void    add(int index, T e);\par
+    int     size();\par
+public:\par
+    class Node \{\par
+    private:\par
+        T data;\par
+        Node* next;\par
+        friend class SLinkedList<T>;\par
+    public:\par
+        Node() \{\par
+            next = 0;\par
+        \}\par
+        Node(Node* next) \{\par
+            this->next = next;\par
+        \}\par
+        Node(T data, Node* next) \{\par
+            this->data = data;\par
+            this->next = next;\par
+        \}\par
+    \};\par
+\};\par
+template <class T>\par
+void SLinkedList<T>::add(const T& e) \{\par
+/* Insert an element into the end of the list. */\par
+\tab\tab if(head == NULL)\{\par
+\tab\tab head = tail = new Node(e, NULL);\par
+\tab\}\par
+\tab else\{\par
+\tab\tab Node* newNode = new Node(e, NULL);\par
+\tab\tab tail->next = newNode;\par
+\tab\tab tail = newNode;\par
+\tab\}\tab\par
+\tab count++;\par
+\}\par
+\par
+template<class T>\par
+void SLinkedList<T>::add(int index, const T& e) \{\par
+    /* Insert an element into the list at given index. */ \par
+    if(index > count || index < 0)\{\par
+\tab\tab\tab throw std::out_of_range("Out of range");\par
+\tab\tab\}\par
+\tab\tab if(head == NULL)\{\par
+\tab\tab\tab head = tail = new Node(e, NULL);\par
+\tab\tab\}\par
+\tab\tab else\{\par
+\tab\tab\tab if(index == 0)\{\par
+\tab\tab\tab\tab Node* newNode = new Node(e, NULL);\par
+\tab\tab\tab\tab newNode->next = head;\par
+\tab\tab\tab\tab head = newNode;\par
+\tab\tab\tab\}\par
+\tab\tab\tab else\{\par
+\tab\tab\tab\tab Node* tmpNode = head;\par
+\tab\tab\tab\tab for(int i=0; i<index-1; i++)\{\par
+\tab\tab\tab\tab\tab tmpNode = tmpNode->next;\par
+\tab\tab\tab\tab\}\par
+\tab\tab\tab\tab Node* newNode = new Node(e,NULL);\par
+\tab\tab\tab\tab newNode->next = tmpNode->next;\par
+\tab\tab\tab\tab tmpNode->next = newNode;\par
+\tab\tab\tab\tab if(tmpNode == tail) \{ \par
+        \tab\tab tail = newNode;\par
+        \}\par
+\tab\tab\tab\}\par
+\tab\tab\}\par
+\tab\tab count++;\par
+\}\par
+\par
+template<class T>\par
+int SLinkedList<T>::size() \{\par
+    /* Return the length (size) of list */ \par
+    return count;\par
+\}\par
+\par
+\par
+2.\par
+\par
+template<class T>\par
+T SLinkedList<T>::get(int index) \{\par
+/* Give the data of the element at given index in the list. */\par
+\tab if(index > count || index < 0)\{\par
+\tab      throw std::out_of_range("Out of range");\par
+\tab\}\par
+\tab if(head == NULL)\{\par
+\tab\tab  throw std::out_of_range("Out of range");\par
+\tab\}\par
+\tab else\{\par
+\tab\tab if(index == count-1)\{\par
+\tab\tab\tab return tail->data;\par
+\tab\tab\}\par
+\tab\tab else\{\par
+\tab\tab\tab Node* tmpNode = head;\par
+\tab\tab\tab for(int i=0; i<index; i++)\{\par
+\tab\tab\tab\tab if(tmpNode->next != NULL)\{\par
+\tab\tab\tab\tab\tab tmpNode = tmpNode->next;\tab\tab\tab\tab\par
+\tab\tab\tab\tab\}\par
+\tab\tab\tab\}\par
+\tab\tab\tab return tmpNode->data;\par
+\tab\tab\}\par
+\tab\}\par
+\}\par
+\par
+template <class T>\par
+void SLinkedList<T>::set(int index, const T& e) \{\par
+/* Assign new value for element at given index in the list */\par
+\tab if(index > count || index < 0)\{\par
+\tab      throw std::out_of_range("Out of range");\par
+\tab\}\par
+\tab if(head == NULL)\{\par
+\tab\tab throw  std::out_of_range("Out of range");\par
+\tab\}\par
+\tab else\{\par
+\tab\tab Node* tmpNode = head;\par
+\tab\tab for(int i=0; i<index; i++)\{\par
+\tab\tab\tab if(tmpNode != NULL)\{\par
+\tab\tab\tab\tab tmpNode = tmpNode->next;\par
+\tab\tab\tab\}\par
+\tab\tab\}\par
+\tab\tab tmpNode->data = e;\par
+\tab\}\par
+\}\par
+\par
+template<class T>\par
+bool SLinkedList<T>::empty() \{\par
+/* Check if the list is empty or not. */\par
+\tab if(head == NULL) return 1;\par
+\tab else return 0;\par
+\}\par
+\par
+template<class T>\par
+int SLinkedList<T>::indexOf(const T& item) \{\par
+/* Return the first index wheter item appears in list, otherwise return -1 */\par
+\tab if(head == NULL)\{\par
+\tab\tab return -1;\par
+\tab\}\par
+\tab else\{\par
+\tab\tab Node* tmpNode = head;\par
+\tab\tab for(int i=0; i<count; i++)\{\par
+\tab\tab\tab if(tmpNode != NULL)\{\par
+\tab\tab\tab\tab if(tmpNode->data == item) return i;\par
+\tab\tab\tab\tab tmpNode = tmpNode->next;\par
+\tab\tab\tab\}\par
+\tab\tab\}\par
+\tab\tab return -1;\par
+\tab\}\par
+\}\par
+\par
+template<class T>\par
+bool SLinkedList<T>::contains(const T& item) \{\par
+/* Check if item appears in the list */\par
+\tab if(head == NULL)\{\par
+\tab\tab return 0;\par
+\tab\}\par
+\tab else\{\par
+\tab\tab Node* tmpNode = head;\par
+\tab\tab for(int i=0; i<count; i++)\{\par
+\tab\tab\tab if(tmpNode != NULL)\{\par
+\tab\tab\tab\tab if(tmpNode->data == item) return 1;\par
+\tab\tab\tab\tab tmpNode = tmpNode->next;\par
+\tab\tab\tab\}\par
+\tab\tab\}\par
+\tab\tab return 0;\par
+\tab\}\par
+\}\par
+\par
+\par
+3.\par
+\f1\lang1033 template <class T>\par
+T SLinkedList<T>::removeAt(int index)\par
+\{\par
+    /* Remove element at index and return removed value */\par
+\tab if(index > count || index < 0)\{\par
+\tab\tab throw std::out_of_range("Out of range");\par
+\tab\}\par
+\tab if(head == NULL)\{\par
+\tab\tab throw std::out_of_range("Out of range");\par
+\tab\}\par
+\tab else\{\par
+\tab\tab T remove_data;\par
+\tab\tab Node* tmpNode = head;\par
+\tab\tab if(index == 0)\{\par
+\tab\tab\tab remove_data = tmpNode->data;\par
+\tab\tab\tab head = tmpNode->next;\par
+\tab\tab\tab delete tmpNode;\par
+\tab\tab\}\par
+\tab\tab else\{\par
+\tab\tab\tab for(int i=0; i<index-1; i++)\{// 0 1 2 3\par
+\tab\tab\tab\tab tmpNode = tmpNode->next;\par
+\tab\tab\tab\}\par
+\tab\tab\tab if(tmpNode->next == tail)\{\par
+\tab\tab\tab\tab tail = tmpNode;\par
+\tab\tab\tab\}\par
+\tab\tab\tab remove_data = (tmpNode->next)->data;\par
+\tab\tab\tab Node* tmpNode1 = (tmpNode->next)->next;\par
+\tab\tab\tab delete tmpNode->next;\par
+\tab\tab\tab tmpNode->next = tmpNode1;\par
+\tab\tab\}\par
+\tab\tab count--;\par
+\tab\tab return remove_data;\par
+\tab\}\par
+\}\par
+\par
+template <class T>\par
+bool SLinkedList<T>::removeItem(const T& item)\par
+\{\par
+    /* Remove the first appearance of item in list and return true, otherwise return false */\par
+    if(head == NULL)\{\par
+\tab\tab\tab return false;\par
+\tab\tab\}\par
+\tab\tab else\{\par
+\tab\tab\tab if(this->contains(item) == 0)\{\par
+\tab\tab\tab\tab return false;\par
+\tab\tab\tab\}\par
+\tab\tab\tab else\{\par
+\tab\tab\tab\tab int count = this->indexOf(item);\par
+\tab\tab\tab\tab removeAt(count); //3\par
+\tab\tab\tab\}\par
+\tab\tab\}\par
+\tab\tab return true;\par
+\}\par
+\par
+template<class T>\par
+void SLinkedList<T>::clear()\{\par
+    /* Remove all elements in list */\par
+\tab if(head == NULL) return;\par
+\tab else\{\par
+\tab\tab Node* tmpNode = head;\par
+\tab\tab if(tmpNode != NULL)\{\par
+\tab\tab\tab head = tmpNode->next;\par
+\tab\tab\tab delete tmpNode;\par
+\tab\tab\tab tmpNode = head;\par
+\tab\tab\}\par
+\tab\}\par
+\tab tail = NULL;\par
+\tab count = 0;\par
+\}\par
+\par
+\f0\lang1066 4.\par
+template <class T>\par
+class SLinkedList\par
+\{\par
+public:\par
+    class Iterator; //forward declaration\par
+    class Node;     //forward declaration\par
+protected:\par
+    Node *head;\par
+    Node *tail;\par
+    int count;\par
+public:\par
+    SLinkedList() : head(NULL), tail(NULL), count(0)\{\};\par
+    ~SLinkedList();\par
+    void add(const T &e);\par
+    void add(int index, const T &e);\par
+    T removeAt(int index);\par
+    bool removeItem(const T &removeItem);\par
+    bool empty();\par
+    int size();\par
+    void clear();\par
+    T get(int index);\par
+    void set(int index, const T &e);\par
+    int indexOf(const T &item);\par
+    bool contains(const T &item);\par
+    string toString();\par
+    SLinkedList(const SLinkedList &list)\par
+    \{\par
+        this->count = 0;\par
+        this->head = NULL;\par
+        this->tail = NULL;\par
+    \}\par
+    Iterator begin()\par
+    \{\par
+        return Iterator(this, true);\par
+    \}\par
+    Iterator end()\par
+    \{\par
+        return Iterator(this, false);\par
+    \}\par
+public:\par
+    class Node\par
+    \{\par
+    private:\par
+        T data;\par
+        Node *next;\par
+        friend class SLinkedList<T>;\par
+    public:\par
+        Node()\par
+        \{\par
+            next = 0;\par
+        \}\par
+        Node(Node *next)\par
+        \{\par
+            this->next = next;\par
+        \}\par
+        Node(T data, Node *next = NULL)\par
+        \{\par
+            this->data = data;\par
+            this->next = next;\par
+        \}\par
+    \};\par
+    class Iterator\par
+    \{\par
+    private:\par
+        SLinkedList<T> *pList;\par
+        Node *current;\par
+        int index; // corresponding with current node\par
+    public:\par
+        Iterator(SLinkedList<T> *pList, bool begin);\par
+        Iterator &operator=(const Iterator &iterator);\par
+        void set(const T &e);\par
+        T &operator*();\par
+        bool operator!=(const Iterator &iterator);\par
+        \par
+        // Prefix ++ overload\par
+        Iterator &operator++();\par
+        \par
+        // Postfix ++ overload\par
+        Iterator operator++(int);\par
+    \};\par
+\};\par
+\par
+template <class T>\par
+SLinkedList<T>::Iterator::Iterator(SLinkedList<T>* pList, bool begin)\par
+\{\par
+    /*\par
+        Constructor of iterator\par
+        * Set pList to pList\par
+        * begin = true: \par
+        * * Set current (index = 0) to pList's head if pList is not NULL\par
+        * * Otherwise set to NULL (index = -1)\par
+        * begin = false: \par
+        * * Always set current to NULL\par
+        * * Set index to pList's size if pList is not NULL, otherwise 0\par
+    */\par
+\}\par
+\par
+template <class T>\par
+typename SLinkedList<T>::Iterator& SLinkedList<T>::Iterator::operator=(const Iterator& iterator)\par
+\{\par
+    /*\par
+        Assignment operator\par
+        * Set this current, index, pList to iterator corresponding elements.\par
+    */\par
+\}\par
+\par
+template <class T>\par
+void SLinkedList<T>::Iterator::remove()\par
+\{\par
+    /*\par
+        Remove a node which is pointed by current\par
+        * After remove current points to the previous node of this position (or node with index - 1)\par
+        * If remove at front, current points to previous "node" of head (current = NULL, index = -1)\par
+        * Exception: throw std::out_of_range("Segmentation fault!") if remove when current is NULL\par
+    */\par
+\}\par
+\par
+template <class T>\par
+void SLinkedList<T>::Iterator::set(const T& e)\par
+\{\par
+    /*\par
+        Set the new value for current node\par
+        * Exception: throw std::out_of_range("Segmentation fault!") if current is NULL\par
+    */\par
+\}\par
+\par
+template <class T>\par
+T& SLinkedList<T>::Iterator::operator*()\par
+\{\par
+    /*\par
+        Get data stored in current node\par
+        * Exception: throw std::out_of_range("Segmentation fault!") if current is NULL\par
+    */\par
+\}\par
+\par
+template <class T>\par
+bool SLinkedList<T>::Iterator::operator!=(const Iterator& iterator)\par
+\{\par
+    /*\par
+        Operator not equals\par
+        * Returns false if two iterators points the same node and index\par
+    */\par
+\}\par
+// Prefix ++ overload\par
+template <class T>\par
+typename SLinkedList<T>::Iterator& SLinkedList<T>::Iterator::operator++()\par
+\{\par
+    /*\par
+        Prefix ++ overload\par
+        * Set current to the next node\par
+        * If iterator corresponds to the previous "node" of head, set it to head\par
+        * Exception: throw std::out_of_range("Segmentation fault!") if iterator corresponds to the end\par
+    */\par
+\}\par
+// Postfix ++ overload\par
+template <class T>\par
+typename SLinkedList<T>::Iterator SLinkedList<T>::Iterator::operator++(int)\par
+\{\par
+    /*\par
+        Postfix ++ overload\par
+        * Set current to the next node\par
+        * If iterator corresponds to the previous "node" of head, set it to head\par
+        * Exception: throw std::out_of_range("Segmentation fault!") if iterator corresponds to the end\par
+    */\par
+\}\par
+\par
+\par
+5.\par
+\par
+class LLNode \{\par
+    public:\par
+        int val;\par
+        LLNode* next;\par
+        LLNode();\par
+        LLNode(int val, LLNode* next);\par
+\}\par
+\par
+6.\par
+class LLNode \{\par
+public:\par
+    int val;\par
+    LLNode* next;\par
+    LLNode(); // Constructor: val = 0, next = nullptr\par
+    LLNode(int val, LLNode* next); // Constructor with customized data\par
+\}\par
+\par
+7.\par
+class LLNode \{\par
+public:\par
+    int val;\par
+    LLNode* next;\par
+    LLNode(); // Constructor: val = 0, next = nullptr\par
+    LLNode(int val, LLNode* next); // Constructor with customized data\par
+\}\par
+\par
+\par
+8.\par
+class LinkedList \{\par
+    public: \par
+        class Node;\par
+    private:\par
+        Node* head;\par
+        Node* tail;\par
+        int size;\par
+    public: \par
+        class Node \{\par
+            private: \par
+                int value;\par
+                Node* next;\par
+                friend class LinkedList;\par
+            public:\par
+                Node() \{\par
+                    this->next = NULL;\par
+                \}\par
+                Node(Node* node) \{\par
+                    this->value = node->value;\par
+                    this->next = node->next;\par
+                \}\par
+                Node(int value, Node* next = NULL) \{\par
+                    this->value = value;\par
+                    this->next = next;\par
+                \}\par
+        \};\par
+        LinkedList(): head(NULL), tail(NULL), size(0) \{\};\par
+\tab void partition(int k);\par
+\};\par
+\par
+9.\par
+class Polynomial;\par
+class Term \{\par
+private:\par
+    double coeff;   \par
+    int exp;\par
+    friend class Polynomial;\par
+public:\par
+    Term(double coeff = 0.0, int exp = 0) \{\par
+        this->coeff = coeff;\par
+        this->exp = exp;\par
+    \}\par
+    bool operator==(const Term& rhs) const \{\par
+        return this->coeff == rhs.coeff && this->exp == rhs.exp;\par
+    \}\par
+    friend ostream & operator<<(ostream &os, const Term& term) \{\par
+        cout << endl;\par
+        cout << "Term: " << "(" << term.coeff << " " << term.exp << ")";\par
+        return os;\par
+    \}\par
+\};\par
+class Polynomial \{\par
+private:\par
+    SLinkedList<Term>* terms;\par
+public:\par
+    Polynomial() \{\par
+        this->terms = new SLinkedList<Term>();\par
+    \}\par
+    ~Polynomial() \{\par
+        this->terms->clear();\par
+    \}\par
+    void insertTerm(const Term& term);\par
+    void insertTerm(double coeff, int exp);\par
+    void print() \{\par
+        SLinkedList<Term>::Iterator it;\par
+        cout << "[";\par
+        for (it = this->terms->begin(); it != this->terms->end(); it++) \{\par
+            cout << (*it);\par
+        \}\par
+        cout << endl << "]";\par
+    \}\par
+\};\par
+\b class Polynomial;\par
+class Term \{\par
+private:\par
+    double coeff;   \par
+    int exp;\par
+    friend class Polynomial;\par
+public:\par
+    Term(double coeff = 0.0, int exp = 0) \{\par
+        this->coeff = coeff;\par
+        this->exp = exp;\par
+    \}\par
+    bool operator==(const Term& rhs) const \{\par
+        return this->coeff == rhs.coeff && this->exp == rhs.exp;\par
+    \}\par
+    friend ostream & operator<<(ostream &os, const Term& term) \{\par
+        cout << endl;\par
+        cout << "Term: " << "(" << term.coeff << " " << term.exp << ")";\par
+        return os;\par
+    \}\par
+\};\par
+class Polynomial \{\par
+private:\par
+    SLinkedList<Term>* terms;\par
+public:\par
+    Polynomial() \{\par
+        this->terms = new SLinkedList<Term>();\par
+    \}\par
+    ~Polynomial() \{\par
+        this->terms->clear();\par
+    \}\par
+    void insertTerm(const Term& term);\par
+    void insertTerm(double coeff, int exp);\par
+    void print() \{\par
+        SLinkedList<Term>::Iterator it;\par
+        cout << "[";\par
+        for (it = this->terms->begin(); it != this->terms->end(); it++) \{\par
+            cout << (*it);\par
+        \}\par
+        cout << endl << "]";\par
+    \}\par
+\};\par
+\par
+10.\par
+\par
+class Node\par
+\{\par
+    int data;\par
+    Node* next;\par
+public:\par
+    Node(): data(0), next(nullptr)\{\}\par
+\par
+    Node(int data, Node* next)\par
+    \{\par
+        this->data = data;\par
+        this->next = next;\par
+    \}\par
+\par
+    int getData()\par
+    \{\par
+        return this->data;\par
+    \}\par
+\par
+    void setData(int data)\par
+    \{\par
+        this->data = data;\par
+    \}\par
+\par
+    Node* getNext()\par
+    \{\par
+        return this->next;\par
+    \}\par
+\par
+    void setNext(Node* next)\par
+    \{\par
+        this->next = next;\par
+    \}\par
+\};\par
+\par
+11.\par
+class LLNode \{\par
+public:\par
+    int val;\par
+    LLNode* next;\par
+    LLNode(); // Constructor: val = 0, next = nullptr\par
+    LLNode(int val, LLNode* next); // Constructor with customized data\b0\f1\lang1033\par
+}
+ 

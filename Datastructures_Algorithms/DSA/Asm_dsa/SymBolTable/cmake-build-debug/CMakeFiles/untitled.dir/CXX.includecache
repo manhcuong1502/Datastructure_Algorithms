@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/christian/Downloads/asm_dsa/untitled/SymbolTable.cpp
+SymbolTable.h
+/Users/christian/Downloads/asm_dsa/untitled/SymbolTable.h
+
+/Users/christian/Downloads/asm_dsa/untitled/SymbolTable.h
+main.h
+/Users/christian/Downloads/asm_dsa/untitled/main.h
+
+/Users/christian/Downloads/asm_dsa/untitled/error.h
+string
+-
+stdio.h
+-
+string.h
+-
+iostream
+-
+
+/Users/christian/Downloads/asm_dsa/untitled/main.cpp
+SymbolTable.h
+/Users/christian/Downloads/asm_dsa/untitled/SymbolTable.h
+SymbolTable.cpp
+/Users/christian/Downloads/asm_dsa/untitled/SymbolTable.cpp
+
+/Users/christian/Downloads/asm_dsa/untitled/main.h
+iostream
+-
+string
+-
+fstream
+-
+regex
+-
+error.h
+/Users/christian/Downloads/asm_dsa/untitled/error.h
+

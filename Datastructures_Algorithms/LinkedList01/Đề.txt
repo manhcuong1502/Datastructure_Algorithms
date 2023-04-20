@@ -1,0 +1,62 @@
+
+---------------Làm Bài------------------
+
+CODE TRONG FILE MAIN.CPP
+
+	Cho cấu trúc:
+struct Node
+{
+  int value;
+  Node *next;
+};
+
+	Định dạng file test:
+n		// Số lượng node của list 1
+a b c....e 	// Giá trị các node của list 1
+x		// index của node cần xóa, bắt đầu từ 0
+y	// Giá trị của node cần xóa
+
+	Thực hiện các hàm:
+
+Tên hàm: createLinkedList.
+Tham số truyền vào: số lượng node của list (n), mảng giá trị các phần tử của node (arr)
+Giá trị trả về: Con trỏ trỏ vào Node đầu tiên của list.
+Thân hàm:
+	_ Tạo 1 danh sách liên kết có n phần tử, mang giá trị tương ứng trong mảng được truyền vào.
+
+
+Tên hàm: removeAt. 
+Tham số truyền vào: tham chiếu đến 1 danh sách liên kết (list), chỉ số vị trí của node (pos).
+Giá trị trả về: Giá trị của 1 node
+Thân hàm:
+	_ Xóa node tại vị trí được truyền vào và trả về giá trị của node được xóa.
+	_ Nếu vị trí không tồn tại trong danh sách liên kết, trả về -1.
+
+Tên hàm: remove. 
+Tham số truyền vào: tham chiếu đến 1 danh sách liên kết (list), 1 giá trị (value).
+Giá trị trả về: 1 nếu xóa thành công, 0 nếu xóa không thành công (không có giá trị cần xóa), -1 nếu SAU KHI XÓA,
+trong danh sách không còn node nào.
+Thân hàm: Xóa tất cả các node mang giá trị được truyền vào.
+	
+Tên hàm: sort. 
+Tham số truyền vào: danh sách liên kết (list).
+Giá trị trả về: không có giá trị trả về.
+Thân hàm:
+	Sắp xếp các phần tử trong danh sách(nếu có) theo thứ tự giảm dần.
+
+Tên hàm: printList. 
+Tham số truyền vào: danh sách liên kết (list).
+Giá trị trả về: không có giá trị trả về.
+Thân hàm:
+	Nếu danh sách không có phần tử nào, in ra "Empty List!";
+	In ra giá trị của các phần tử của danh sách, giữa mỗi phần tử cách nhau 1 khoảng trắng.
+	Không có bất kì khoảng trắng nào ở trước phần tử đầu tiên và sau phần tử cuối cùng.
+	Có ký tự xuống dòng sau khi in.
+
+-----------------Chấm điểm------------------
+- Cài biến môi trường: https://codecute.com/c/huong-dan-cai-dat-trinh-bien-dich-c-c-mingw-gcc.html
+Lưu ý: Kiểm tra xem máy đã được cài biến môi trường chưa ở cuối trang, nếu chưa thì mới tiến hành cài.
+
+- Chạy file test.cpp để xem kết quả.
+
+

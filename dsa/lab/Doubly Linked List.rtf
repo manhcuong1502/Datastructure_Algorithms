@@ -1,0 +1,559 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset163 Calibri;}{\f1\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.22000}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang1066 dll\f1\lang1033\par
+\par
+\f0\lang1066 1.\f1\lang1033\par
+template <class T>\par
+class DLinkedList \{\par
+public:\par
+    class Node; // Forward declaration\par
+protected:\par
+    Node* head;\par
+    Node* tail;\par
+    int count;\par
+public:\par
+    DLinkedList();\par
+    ~DLinkedList();\par
+    void    add(const T &e);\par
+    void    add(int index, const T &e);\par
+    int     size();\par
+public:\par
+    class Node\par
+    \{\par
+    private:\par
+        T data;\par
+        Node *next;\par
+        Node *previous;\par
+        friend class DLinkedList<T>;\par
+\par
+    public:\par
+        Node()\par
+        \{\par
+            this->previous = NULL;\par
+            this->next = NULL;\par
+        \}\par
+\par
+        Node(const T &data)\par
+        \{\par
+            this->data = data;\par
+            this->previous = NULL;\par
+            this->next = NULL;\par
+        \}\par
+    \};\par
+\};\par
+template <class T>\par
+void DLinkedList<T>::add(const T& e) \{\par
+/* Insert an element into the end of the list. */\par
+\tab\tab if(head == NULL)\{\par
+\tab\tab head = tail = new Node(e);\par
+\tab\}\par
+\tab else\{\par
+\tab\tab Node* newNode = new Node(e);\par
+\tab\tab tail->next = newNode;\par
+\tab\tab newNode->previous = tail;//\par
+\tab\tab tail = newNode;\par
+\tab\}\tab\par
+\tab count++;\par
+\}\par
+\par
+template<class T>\par
+void DLinkedList<T>::add(int index, const T& e) \{\par
+    /* Insert an element into the list at given index. */ \par
+    if(index > count || index < 0)\{\par
+\tab\tab\tab throw std::out_of_range("Out of range");\par
+\tab\tab\}\par
+\tab\tab if(head == NULL)\{\par
+\tab\tab\tab head = tail = new Node(e);\par
+\tab\tab\}\par
+\tab\tab else\{\par
+\tab\tab\tab if(index == 0)\{\par
+\tab\tab\tab\tab Node* newNode = new Node(e);\par
+\tab\tab\tab\tab newNode->next = head;\par
+\tab\tab\tab\tab head->previous = newNode;//\par
+\tab\tab\tab\tab head = newNode;\par
+\tab\tab\tab\}\par
+\tab\tab\tab else\{\par
+\tab\tab\tab\tab Node* tmpNode = head;\par
+\tab\tab\tab\tab for(int i=0; i<index-1; i++)\{\par
+\tab\tab\tab\tab\tab tmpNode = tmpNode->next;\par
+\tab\tab\tab\tab\}\par
+\tab\tab\tab\tab Node* newNode = new Node(e);// 0 1 2 3 4\par
+\tab\tab\tab\tab newNode->next = tmpNode->next;\par
+\tab\tab\tab\tab (tmpNode->next)->previous = newNode;//\par
+\tab\tab\tab\tab tmpNode->next = newNode;\par
+\tab\tab\tab\tab newNode->previous = tmpNode;//\par
+\tab\tab\tab\tab if(tmpNode == tail) \{ \par
+\tab\tab\tab\tab\tab\tab tail->previous = tmpNode;\par
+        \tab\tab tail = newNode;\tab\tab\tab\tab\tab\tab\par
+        \}\par
+\tab\tab\tab\}\par
+\tab\tab\}\par
+\tab\tab count++;\par
+\}\par
+\par
+template<class T>\par
+int DLinkedList<T>::size() \{\par
+    /* Return the length (size) of list */ \par
+    return count;\par
+\}\par
+\par
+\par
+\f0\lang1066 2.\par
+template <class T>\par
+class DLinkedList \{\par
+public:\par
+    class Node; // Forward declaration\par
+protected:\par
+    Node* head;\par
+    Node* tail;\par
+    int count;\par
+public:\par
+    DLinkedList();\par
+    ~DLinkedList();\par
+    void    add(const T &e);\par
+    void    add(int index, const T &e);\par
+    int     size();\par
+    bool    empty();\par
+    T       get(int index);\par
+    void    set(int index, const T &e);\par
+    int     indexOf(const T &item);\par
+    bool    contains(const T &item);\par
+public:\par
+    class Node\par
+    \{\par
+    private:\par
+        T data;\par
+        Node *next;\par
+        Node *previous;\par
+        friend class DLinkedList<T>;\par
+\par
+    public:\par
+        Node()\par
+        \{\par
+            this->previous = NULL;\par
+            this->next = NULL;\par
+        \}\par
+\par
+        Node(const T &data)\par
+        \{\par
+            this->data = data;\par
+            this->previous = NULL;\par
+            this->next = NULL;\par
+        \}\par
+    \};\par
+\};\par
+\f1\lang1033 template<class T>\par
+T DLinkedList<T>::get(int index) \{\par
+    /* Give the data of the element at given index in the list. */\par
+    if(head == NULL)\{\par
+\tab\tab\tab throw std::out_of_range("Out of range");\par
+\tab\tab\}\par
+\tab\tab if(index < 0 || index > count)\{\par
+\tab\tab\tab throw std::out_of_range("Out of range");\par
+\tab\tab\}\par
+\tab\tab Node* tmpNode = head;\par
+\tab\tab for(int i=0; i<index; i++)\{// 0 1 2 3 4\par
+\tab\tab\tab tmpNode = tmpNode->next;\par
+\tab\tab\}\par
+\tab\tab return tmpNode->data;\par
+\}\par
+\par
+template <class T>\par
+void DLinkedList<T>::set(int index, const T& e) \{\par
+    /* Assign new value for element at given index in the list */\par
+\tab\tab if(head == NULL)\{\par
+\tab\tab\tab throw std::out_of_range("Out of range");\par
+\tab\tab\}\par
+\tab\tab if(index < 0 || index > count)\{\par
+\tab\tab\tab throw std::out_of_range("Out of range");\par
+\tab\tab\}\par
+\tab\tab Node* tmpNode = head;\par
+\tab\tab for(int i=0; i<index; i++)\{// 0 1 2 3 4\par
+\tab\tab\tab tmpNode = tmpNode->next;\par
+\tab\tab\}\par
+\tab\tab tmpNode->data = e;\par
+\}\par
+template<class T>\par
+bool DLinkedList<T>::empty() \{\par
+    /* Check if the list is empty or not. */\par
+    if(head == NULL)\{\par
+\tab\tab\tab return 1;\par
+\tab\tab\}\par
+\tab\tab else return 0;\par
+\}\par
+template<class T>\par
+int DLinkedList<T>::indexOf(const T& item) \{\par
+    /* Return the first index wheter item appears in list, otherwise return -1 */\par
+\tab\tab if(head == NULL)\{\par
+\tab\tab\tab return -1;\par
+\tab\tab\}\par
+\tab\tab else\{\par
+\tab\tab\tab Node* tmpNode = head;\par
+\tab\tab\tab for(int i=0; i<count; i++)\{// 0 1 2 3 4\par
+\tab\tab\tab\tab if(tmpNode->data == item) return i;\par
+\tab\tab\tab\tab tmpNode = tmpNode->next;\par
+\tab\tab\tab\}\par
+\tab\tab\tab return -1;\par
+\tab\tab\}\par
+\}\par
+template<class T>\par
+bool DLinkedList<T>::contains(const T& item) \{\par
+    /* Check if item appears in the list */\par
+    if(this->indexOf(item) != -1) return 1;\par
+\tab\tab else return 0;\par
+\}\par
+\par
+\f0\lang1066 3.\par
+template <class T>\par
+class DLinkedList\par
+\{\par
+public:\par
+    class Iterator; //forward declaration\par
+    class Node;     //forward declaration\par
+protected:\par
+    Node *head;\par
+    Node *tail;\par
+    int count;\par
+public:\par
+    DLinkedList() : head(NULL), tail(NULL), count(0)\{\};\par
+    ~DLinkedList();\par
+    void add(const T &e);\par
+    void add(int index, const T &e);\par
+    T removeAt(int index);\par
+    bool removeItem(const T &item);\par
+    bool empty();\par
+    int size();\par
+    void clear();\par
+    T get(int index);\par
+    void set(int index, const T &e);\par
+    int indexOf(const T &item);\par
+    bool contains(const T &item);\par
+    string toString();\par
+    Iterator begin()\par
+    \{\par
+        return Iterator(this, true);\par
+    \}\par
+    Iterator end()\par
+    \{\par
+        return Iterator(this, false);\par
+    \}\par
+public:\par
+    class Node\par
+    \{\par
+    private:\par
+        T data;\par
+        Node *next;\par
+        friend class DLinkedList<T>;\par
+    public:\par
+        Node()\par
+        \{\par
+            next = 0;\par
+        \}\par
+        Node(Node *next)\par
+        \{\par
+            this->next = next;\par
+        \}\par
+        Node(T data, Node *next = NULL)\par
+        \{\par
+            this->data = data;\par
+            this->next = next;\par
+        \}\par
+    \};\par
+    class Iterator\par
+    \{\par
+    private:\par
+        DLinkedList<T> *pList;\par
+        Node *current;\par
+        int index; // is the index of current in pList\par
+    public:\par
+        Iterator(DLinkedList<T> *pList, bool begin);\par
+        Iterator &operator=(const Iterator &iterator);\par
+        void set(const T &e);\par
+        T &operator*();\par
+        bool operator!=(const Iterator &iterator);\par
+        void remove();\par
+        \par
+        // Prefix ++ overload\par
+        Iterator &operator++();\par
+        \par
+        // Postfix ++ overload\par
+        Iterator operator++(int);\par
+    \};\par
+\};/*\par
+ * TODO: Implement class Iterator's method\par
+ * Note: method remove is different from SLinkedList, which is the advantage of DLinkedList\par
+ */\par
+template <class T>\par
+DLinkedList<T>::Iterator::Iterator(DLinkedList<T> *pList, bool begin) \par
+\{\par
+\par
+\}\par
+\par
+template <class T>\par
+typename DLinkedList<T>::Iterator& DLinkedList<T>::Iterator::operator=(const DLinkedList<T>::Iterator &iterator)\par
+\{\par
+    \par
+\}\par
+\par
+template <class T> \par
+void DLinkedList<T>::Iterator::set(const T &e)\par
+\{\par
+    \par
+\}\par
+\par
+template<class T>\par
+T& DLinkedList<T>::Iterator::operator*() \par
+\{\par
+    \par
+\}\par
+\par
+template<class T>\par
+void DLinkedList<T>::Iterator::remove() \par
+\{\par
+    /*\par
+    * TODO: delete Node in pList which Node* current point to. \par
+    *       After that, Node* current point to the node before the node just deleted.\par
+    *       If we remove first node of pList, Node* current point to nullptr.\par
+    *       Then we use operator ++, Node* current will point to the head of pList.\par
+    */\par
+\}\par
+\par
+template<class T>\par
+bool DLinkedList<T>::Iterator::operator!=(const DLinkedList::Iterator &iterator) \par
+\{\par
+    \par
+\}\par
+\par
+template<class T>\par
+typename DLinkedList<T>::Iterator& DLinkedList<T>::Iterator::operator++() \par
+\{\par
+    \par
+\}\par
+\par
+template<class T>\par
+typename DLinkedList<T>::Iterator DLinkedList<T>::Iterator::operator++(int) \par
+\{\par
+    \par
+\}\par
+\par
+\par
+4.\par
+template <class T>\par
+class DLinkedList \{\par
+public:\par
+    class Node; // Forward declaration\par
+protected:\par
+    Node* head;\par
+    Node* tail;\par
+    int count;\par
+public:\par
+    DLinkedList();\par
+    ~DLinkedList();\par
+    void    add(const T &e);\par
+    void    add(int index, const T &e);\par
+    int     size();\par
+    bool    empty();\par
+    T       get(int index);\par
+    void    set(int index, const T &e);\par
+    int     indexOf(const T &item);\par
+    bool    contains(const T &item); \par
+    T       removeAt(int index);\par
+    bool    removeItem(const T &item);\par
+    void    clear();\par
+public:\par
+    class Node\par
+    \{\par
+    private:\par
+        T data;\par
+        Node *next;\par
+        Node *previous;\par
+        friend class DLinkedList<T>;\par
+\par
+    public:\par
+        Node()\par
+        \{\par
+            this->previous = NULL;\par
+            this->next = NULL;\par
+        \}\par
+\par
+        Node(const T &data)\par
+        \{\par
+            this->data = data;\par
+            this->previous = NULL;\par
+            this->next = NULL;\par
+        \}\par
+    \};\par
+\par
+\};\par
+template <class T>\par
+T DLinkedList<T>::removeAt(int index)\par
+\{\par
+    /* Remove element at index and return removed value */\par
+\tab if(index > count || index < 0)\{\par
+\tab\tab throw std::out_of_range("Out of range");\par
+\tab\}\par
+\tab if(head == NULL)\{\par
+\tab\tab throw std::out_of_range("Out of range");\par
+\tab\}\par
+\tab else\{\par
+\tab\tab T remove_data;\par
+\tab\tab Node* tmpNode = head;\par
+\tab\tab if(index == 0)\{\par
+\tab\tab\tab remove_data = tmpNode->data;\par
+\tab\tab\tab head = tmpNode->next;\par
+\tab\tab\tab (tmpNode->next)->previous = NULL;\par
+\tab\tab\tab delete tmpNode;\par
+\tab\tab\}\par
+\tab\tab else\{\par
+\tab\tab\tab for(int i=0; i<index-1; i++)\{// 0 1 2 3\par
+\tab\tab\tab\tab tmpNode = tmpNode->next;\par
+\tab\tab\tab\}\par
+\tab\tab\tab if(tmpNode->next == tail)\{\par
+\tab\tab\tab\tab tail = tmpNode;\par
+\tab\tab\tab\}\par
+\tab\tab\tab remove_data = (tmpNode->next)->data;\par
+\tab\tab\tab Node* tmpNode1 = (tmpNode->next)->next;\par
+\tab\tab\tab tmpNode1->previous = tmpNode;\par
+\tab\tab\tab delete tmpNode->next;\par
+\tab\tab\tab tmpNode->next = tmpNode1;\par
+\tab\tab\}\par
+\tab\tab count--;\par
+\tab\tab return remove_data;\par
+\tab\}\par
+\}\par
+\par
+template <class T>\par
+bool DLinkedList<T>::removeItem(const T& item)\par
+\{\par
+    /* Remove the first apperance of item in list and return true, otherwise return false */\par
+\tab\tab if(head == NULL)\{\par
+\tab\tab\tab return false;\par
+\tab\tab\}\par
+\tab\tab else\{\par
+\tab\tab\tab if(this->contains(item) == 0)\{\par
+\tab\tab\tab\tab return false;\par
+\tab\tab\tab\}\par
+\tab\tab\tab else\{\par
+\tab\tab\tab\tab int count = this->indexOf(item);\par
+\tab\tab\tab\tab removeAt(count); //3\par
+\tab\tab\tab\}\par
+\tab\tab\}\par
+\tab\tab return true;\par
+\}\par
+\par
+template<class T>\par
+void DLinkedList<T>::clear()\{\par
+    /* Remove all elements in list */\par
+\tab if(head == NULL) return;\par
+\tab else\{\par
+\tab\tab Node* tmpNode = head;\par
+\tab\tab if(tmpNode != NULL)\{\par
+\tab\tab\tab head = tmpNode->next;\par
+\tab\tab\tab delete tmpNode;\par
+\tab\tab\tab tmpNode = head;\par
+\tab\tab\}\par
+\tab\}\par
+\tab tail = NULL;\par
+\tab count = 0;\par
+\}\par
+\par
+5.\par
+class DataLog\par
+\{\par
+private:\par
+    list<int> logList;\par
+    list<int>::iterator currentState;\par
+\par
+public:\par
+    DataLog();\par
+    DataLog(const int &data);\par
+    void addCurrentState(int number);\par
+    void subtractCurrentState(int number);\par
+    void save();\par
+    void undo();\par
+    void redo();\par
+\par
+    int getCurrentStateData()\par
+    \{\par
+        return *currentState;\par
+    \}\par
+    \par
+    void printLog()\par
+    \{      \par
+        for (auto i = logList.begin(); i != logList.end(); i++) \{\par
+            if(i == currentState) cout << "Current state: ";\par
+            cout << "[ " << *i << " ] => ";\par
+        \}\par
+        cout << "END_LOG";\par
+    \}\par
+\};\par
+class DataLog\par
+\{\par
+private:\par
+    list<int> logList;\par
+    list<int>::iterator currentState;\par
+\par
+public:\par
+    DataLog();\par
+    DataLog(const int &data);\par
+    void addCurrentState(int number);\par
+    void subtractCurrentState(int number);\par
+    void save();\par
+    void undo();\par
+    void redo();\par
+\par
+\par
+    int getCurrentStateData()\par
+    \{\par
+        return *currentState;\par
+    \}\par
+\par
+    void printLog()\par
+    \{\par
+        for (auto i = logList.begin(); i != logList.end(); i++) \{\par
+            if(i == currentState) cout << "Current state: ";\par
+            cout << "[ " << *i << " ] => ";\par
+        \}\par
+        cout << "END_LOG";\par
+    \}\par
+\};\par
+\par
+6.\par
+struct ListNode \{\par
+    int val;\par
+    ListNode *left;\par
+    ListNode *right;\par
+    ListNode(int x = 0, ListNode *l = nullptr, ListNode* r = nullptr) : val(x), left(l), right(r) \{\}\par
+\};\par
+class DataLog\par
+\{\par
+private:\par
+    list<int> logList;\par
+    list<int>::iterator currentState;\par
+\par
+public:\par
+    DataLog();\par
+    DataLog(const int &data);\par
+    void addCurrentState(int number);\par
+    void subtractCurrentState(int number);\par
+    void save();\par
+    void undo();\par
+    void redo();\par
+\par
+\par
+    int getCurrentStateData()\par
+    \{\par
+        return *currentState;\par
+    \}\par
+\par
+    void printLog()\par
+    \{\par
+        for (auto i = logList.begin(); i != logList.end(); i++) \{\par
+            if(i == currentState) cout << "Current state: ";\par
+            cout << "[ " << *i << " ] => ";\par
+        \}\par
+        cout << "END_LOG";\par
+    \}\par
+\};\f1\lang1033\par
+}
+ 
